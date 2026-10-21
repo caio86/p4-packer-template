@@ -1,0 +1,23 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  identity:
+    hostname: p4
+    username: vagrant
+    # password: vagrant  (regenerate with: openssl passwd -6 <password>)
+    password: "$6$p4boxsalt$SWmtwRnRsp2gFcV.Q6XBzMxA8ztwXwGs7b4XgmsGnKv2WRH50PEhPgH9s3aSEzU99NilhW.58NiBTzOCgarJ20"
+  ssh:
+    install-server: true
+    allow-pw: true
+  storage:
+    layout:
+      name: direct   # plain partition, no LVM -> easier to shrink/compact
+  packages:
+    - sudo
+    - curl
+  late-commands:
+    - echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/vagrant
+    - chmod 440 /target/etc/sudoers.d/vagrant
